@@ -2,30 +2,29 @@ import React, { useState } from 'react';
 import './App.css';
 
 const App = () => {
-  // State to hold the table, multiplier, and product
   const [table, setTable] = useState(null);
   const [multiplier, setMultiplier] = useState(null);
   const [product, setProduct] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [showImage, setShowImage] = useState(false);
 
-  // Function to generate a random table and multiplier
   const generateTable = () => {
-    const randomTable = Math.floor(11 + Math.random() * 9); // Random table from 11 to 19
-    const randomMultiplier = Math.floor(2 + Math.random() * 8); // Multiplier from 2 to 9
+    const randomTable = Math.floor(11 + Math.random() * 9);
+    const randomMultiplier = Math.floor(2 + Math.random() * 8);
     setTable(randomTable);
     setMultiplier(randomMultiplier);
     setProduct(randomTable * randomMultiplier);
-    setShowAnswer(false); // Don't show answer on first click
+    setShowAnswer(false);
+    setShowImage(false); // Hide the image when generating a new question
   };
 
-  // Function to handle the Next button click
   const handleNextClick = () => {
     if (table === null) {
-      generateTable(); // First time, generate the question
+      generateTable();
     } else if (!showAnswer) {
-      setShowAnswer(true); // Show the answer on the next click
+      setShowAnswer(true);
     } else {
-      generateTable(); // Generate a new question after showing the answer
+      generateTable();
     }
   };
 
@@ -48,6 +47,15 @@ const App = () => {
       <button className="next-button" onClick={handleNextClick}>
         Next
       </button>
+      <button className="revise-button" onClick={() => setShowImage(!showImage)}>
+        Revise
+      </button>
+
+      {showImage && (
+        <div className="image-container">
+          <img src="https://i.postimg.cc/25grfTLh/46ec58292695ffa4b93db0d804cdf001.png" alt="Revision" />
+        </div>
+      )}
     </div>
   );
 };
